@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpotiFollow — Bulk Follow Spotify Artists from Your Playlists</title>
+  <meta name="description" content="SpotiFollow is a free desktop app that lets you bulk follow or unfollow Spotify artists from your playlists. Browse artists, filter by playlist, and follow hundreds at once." />
+  <meta name="keywords" content="spotify bulk follow, spotify follow artists, spotify playlist tool, spotify desktop app, spotifollow" />
+  <meta property="og:title" content="SpotiFollow — Bulk Follow Spotify Artists" />
+  <meta property="og:description" content="Free desktop app to bulk follow or unfollow Spotify artists from your playlists." />
+  <meta property="og:url" content="https://ayleexin.github.io/SpotiFollow/" />
+  <meta property="og:type" content="website" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #121212;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    a { color: #1db954; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid #282828;
+    }
+    .logo { font-size: 1.3rem; font-weight: 700; color: #1db954; letter-spacing: -0.5px; }
+    nav a { color: #b3b3b3; font-size: 0.9rem; }
+    nav a:hover { color: #fff; text-decoration: none; }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 5rem 1.5rem 4rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      background: #1db95422;
+      color: #1db954;
+      border: 1px solid #1db95455;
+      border-radius: 999px;
+      padding: 0.25rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    h1 span { color: #1db954; }
+    .hero p {
+      font-size: 1.15rem;
+      color: #b3b3b3;
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+    }
+    .cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn-primary { background: #1db954; color: #000; }
+    .btn-secondary { background: transparent; color: #fff; border: 1px solid #535353; }
+
+    /* FEATURES */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+    .section-label {
+      text-align: center;
+      color: #1db954;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      text-align: center;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      background: #181818;
+      border: 1px solid #282828;
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card-icon { font-size: 1.6rem; margin-bottom: 0.75rem; }
+    .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.875rem; color: #b3b3b3; }
+
+    /* STEPS */
+    .steps { counter-reset: step; display: flex; flex-direction: column; gap: 1.25rem; }
+    .step {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      background: #181818;
+      border: 1px solid #282828;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+    }
+    .step-num {
+      background: #1db954;
+      color: #000;
+      font-weight: 800;
+      font-size: 0.85rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .step p { font-size: 0.875rem; color: #b3b3b3; }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background: #181818;
+      border-top: 1px solid #282828;
+      border-bottom: 1px solid #282828;
+      text-align: center;
+      padding: 4rem 1.5rem;
+    }
+    .cta-banner h2 { margin-bottom: 0.75rem; }
+    .cta-banner p { color: #b3b3b3; margin-bottom: 2rem; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #535353;
+      font-size: 0.8rem;
+      border-top: 1px solid #282828;
+    }
+    footer a { color: #535353; }
+    footer a:hover { color: #b3b3b3; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="logo">SpotiFollow</span>
+    <a href="https://github.com/Ayleexin/SpotiFollow" target="_blank" rel="noopener">View on GitHub →</a>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">Free & Open Source</div>
+    <h1>Bulk follow Spotify artists<br />from your <span>playlists</span></h1>
+    <p>SpotiFollow is a free Windows desktop app that lets you browse all artists across your playlists and follow or unfollow them in one click.</p>
+    <div class="cta-group">
+      <a class="btn btn-primary" href="https://github.com/Ayleexin/SpotiFollow/releases" target="_blank" rel="noopener">Download for Windows</a>
+      <a class="btn btn-secondary" href="https://github.com/Ayleexin/SpotiFollow" target="_blank" rel="noopener">View Source</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-label">Features</p>
+    <h2>Everything you need</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">🎵</div>
+        <h3>Playlist Browser</h3>
+        <p>View all your Spotify playlists and select one or multiple to pull artists from.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎤</div>
+        <h3>Artist List</h3>
+        <p>See every artist from your selected playlists with profile pictures and follow status.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">✅</div>
+        <h3>Already-Followed Indicators</h3>
+        <p>Green checkmarks show which artists you already follow so you don't double up.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Bulk Follow &amp; Unfollow</h3>
+        <p>Select all artists at once and follow or unfollow them with a single click.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Search &amp; Filter</h3>
+        <p>Quickly find any artist by name. Toggle featured artists on or off.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌑</div>
+        <h3>Spotify-Inspired UI</h3>
+        <p>Dark theme with Spotify's signature black and green — feels right at home.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <p class="section-label">Get Started</p>
+    <h2>Up and running in minutes</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Get Spotify API credentials</h3>
+          <p>Create a free app on the <a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">Spotify Developer Dashboard</a> and add <code>http://127.0.0.1:8888/callback</code> as a Redirect URI.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Download &amp; run SpotiFollow</h3>
+          <p>Download the latest release, extract it, and double-click <code>run.bat</code>. No installer needed.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Connect your account</h3>
+          <p>Enter your Client ID and Secret, click Connect, and authorize in the browser window that opens.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h3>Follow your artists</h3>
+          <p>Pick your playlists, browse the artists, select the ones you want, and click Follow Selected.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <h2>Ready to follow your artists?</h2>
+    <p>Free, open source, and takes less than 2 minutes to set up.</p>
+    <a class="btn btn-primary" href="https://github.com/Ayleexin/SpotiFollow/releases" target="_blank" rel="noopener">Download SpotiFollow</a>
+  </div>
+
+  <footer>
+    <p>SpotiFollow is not affiliated with Spotify. &nbsp;·&nbsp; <a href="https://github.com/Ayleexin/SpotiFollow" target="_blank" rel="noopener">GitHub</a> &nbsp;·&nbsp; MIT License</p>
+  </footer>
+
+</body>
+</html>
